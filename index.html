@@ -9,6 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .file-upload {
+            display: none;
+        }
         .toolbar {
             margin-bottom: 10px;
         }
@@ -81,7 +87,41 @@
 <body>
 
     <h2>WhatsApp Message Body Builder</h2>
-    
+    <div class="form-group">
+        <label for="headerType">Header</label>
+        <select id="headerType" class="form-control">
+            <option value="none">None</option>
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+            <option value="document">Document</option>
+        </select>
+    </div>
+
+    <!-- Text Header Input -->
+    <div id="textHeader" class="form-group file-upload">
+        <label for="headerText">Text Header</label>
+        <input type="text" id="headerText" class="form-control" placeholder="Enter header text">
+    </div>
+
+    <!-- Image Upload Input -->
+    <div id="imageUpload" class="form-group file-upload">
+        <label for="headerImage">Upload Image (JPG, PNG only)</label>
+        <input type="file" id="headerImage" accept="image/jpeg, image/png" class="form-control">
+    </div>
+
+    <!-- Video Upload Input -->
+    <div id="videoUpload" class="form-group file-upload">
+        <label for="headerVideo">Upload Video (MP4 only)</label>
+        <input type="file" id="headerVideo" accept="video/mp4" class="form-control">
+    </div>
+
+    <!-- Document Upload Input -->
+    <div id="documentUpload" class="form-group file-upload">
+        <label for="headerDocument">Upload Document (PDF only)</label>
+        <input type="file" id="headerDocument" accept="application/pdf" class="form-control">
+    </div>
+
     <div class="toolbar">
         <!-- Formatting Buttons -->
         <button onclick="insertText('**', '**')">Bold</button>
@@ -242,6 +282,26 @@
             // Update the sample fields to reflect the new variable order
             updateSampleFields();
         }
+
+        $('.file-upload').hide();
+
+        // Function to show relevant input based on selection
+        $('#headerType').on('change', function() {
+            // Hide all inputs
+            $('.file-upload').hide();
+
+            // Show the relevant input based on selection
+            const selectedValue = $(this).val();
+            if (selectedValue === 'text') {
+                $('#textHeader').show();
+            } else if (selectedValue === 'image') {
+                $('#imageUpload').show();
+            } else if (selectedValue === 'video') {
+                $('#videoUpload').show();
+            } else if (selectedValue === 'document') {
+                $('#documentUpload').show();
+            }
+        });
     </script>
 
 </body>
